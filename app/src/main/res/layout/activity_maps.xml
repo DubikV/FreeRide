@@ -1,0 +1,222 @@
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <include layout="@layout/toolbar_panel" />
+
+        <RelativeLayout
+                android:id="@+id/search_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone">
+
+            <ImageButton
+                    android:id="@+id/search_button"
+                    android:layout_width="@dimen/logo_mini_size"
+                    android:layout_height="@dimen/logo_mini_size"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/gap"
+                    android:layout_weight="1"
+                    android:background="@color/colorBlack"
+                    android:src="@drawable/ic_mic"/>
+
+            <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toEndOf="@+id/search_button"
+                    android:orientation="horizontal">
+
+                <EditText
+                        android:id="@+id/search"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionSearch"
+                        android:inputType="text"
+                        android:theme="@style/Map_EditTextStyle"/>
+
+                <ImageView
+                        android:id="@+id/clear_search_image"
+                        android:layout_width="24dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0"
+                        android:contentDescription="@string/search_hint"
+                        android:src="@drawable/ic_clear"
+                        android:visibility="invisible"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+                android:id="@+id/route_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+            <Button
+                    android:id="@+id/evaluate_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/evaluate_button"
+                    android:text="Button"
+                    android:textColor="@color/colorWhite"/>
+
+            <Button
+                    android:id="@+id/route_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/route_button"
+                    android:text="Button"
+                    android:textColor="@color/colorWhite"/>
+        </LinearLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+
+    <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/map"
+            tools:context="ua.com.freeride.activity.LocationPickerActivity"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+    <!--<ProgressBar-->
+    <!--android:id="@+id/loading_progress_bar"-->
+    <!--style="@android:style/Widget.ProgressBar.Small"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="top|start"-->
+    <!--android:gravity="top|start"-->
+    <!--android:layout_marginTop="80dp"-->
+    <!--android:layout_marginStart="8dp"-->
+    <!--android:layout_marginLeft="8dp"-->
+    <!--android:visibility="gone"/>-->
+
+    <ListView
+            android:id="@+id/resultlist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:fadingEdgeLength="16dp"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:elevation="2dp"
+            android:minWidth="296dp"
+            android:background="@drawable/toolbar_custom_background"
+            tools:visibility="gone"
+            tools:ignore="UnusedAttribute"/>
+
+
+    <LinearLayout
+            android:id="@+id/btnMapContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/information_bottom_margin"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|end"
+            android:animateLayoutChanges="true">
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_satellite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                app:srcCompat="@drawable/ic_satellite_on"
+                app:fabSize="normal"
+                android:tint="?colorPrimary"
+                app:backgroundTint="@color/colorWhite"
+                app:rippleColor="@color/colorSoftGrey"
+                app:elevation="2dp"
+                tools:background="@color/colorWhite"
+                tools:ignore="VectorDrawableCompat"
+                android:layout_gravity="bottom|end"/>
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_gps"
+                app:fabSize="normal"
+                android:tint="?colorPrimary"
+                app:backgroundTint="@color/colorWhite"
+                app:rippleColor="@color/colorSoftGrey"
+                app:elevation="2dp"
+                tools:background="@color/colorWhite"
+                tools:ignore="elevation"
+                android:layout_gravity="bottom|end"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/btnTrafficContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/information_bottom_margin"
+            android:orientation="vertical"
+            android:layout_gravity="bottom|start"
+            android:animateLayoutChanges="true">
+
+        <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btn_traffic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="16dp"
+                android:src="@drawable/ic_traffic_on"
+                app:fabSize="normal"
+                android:tint="?colorPrimary"
+                app:backgroundTint="@color/colorWhite"
+                app:rippleColor="@color/colorSoftGrey"
+                app:elevation="2dp"
+                tools:background="@color/colorWhite"
+                tools:ignore="elevation"
+                android:layout_gravity="bottom|start"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/bottom_sheet"/>
+
+</android.support.design.widget.CoordinatorLayout>

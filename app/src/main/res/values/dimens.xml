@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="logo_mini_size">50dp</dimen>
+    <dimen name="horiz_dot_marging">100dp</dimen>
+    <dimen name="information_bottom_margin">24dp</dimen>
+    <dimen name="gap">8dp</dimen>
+</resources>
