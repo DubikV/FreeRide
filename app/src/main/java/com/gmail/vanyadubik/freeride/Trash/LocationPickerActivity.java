@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.activity;
+package com.gmail.vanyadubik.freeride.Trash;
 
 import android.Manifest;
 import android.app.Activity;
@@ -237,8 +237,8 @@ public class LocationPickerActivity extends AppCompatActivity
 
 
     private void checkLocationPermission() {
-        if (enableLocationPermissionRequest && PermissionUtils.shouldRequestLocationStoragePermission(getApplicationContext())) {
-            PermissionUtils.requestLocationPermission(this);
+        if (enableLocationPermissionRequest && PermissionUtils.INSTANCE.shouldRequestLocationStoragePermission(getApplicationContext())) {
+            PermissionUtils.INSTANCE.requestLocationPermission(this);
         }
     }
 
@@ -421,7 +421,7 @@ public class LocationPickerActivity extends AppCompatActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (PermissionUtils.isLocationPermissionGranted(getApplicationContext())) {
+        if (PermissionUtils.INSTANCE.isLocationPermissionGranted(getApplicationContext())) {
             geocoderPresenter.getLastKnownLocation();
         }
     }

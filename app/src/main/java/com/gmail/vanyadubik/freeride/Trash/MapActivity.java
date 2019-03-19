@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.activity;
+package com.gmail.vanyadubik.freeride.Trash;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
