@@ -23,8 +23,6 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.*
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.gmail.vanyadubik.freeride.R
 import com.gmail.vanyadubik.freeride.geocoder.*
 import com.gmail.vanyadubik.freeride.geocoder.api.AddressBuilder
@@ -35,6 +33,7 @@ import com.gmail.vanyadubik.freeride.location.LocationPicker
 import com.gmail.vanyadubik.freeride.model.LocationPoint
 import com.gmail.vanyadubik.freeride.tracker.TrackEvents
 import com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress
+import com.gmail.vanyadubik.freeride.utils.AnimUtils
 import com.gmail.vanyadubik.freeride.utils.PermissionUtils
 import com.gmail.vanyadubik.freeride.utils.ScreenUtils
 import com.google.android.gms.common.ConnectionResult
@@ -52,6 +51,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import pl.charmas.android.reactivelocation2.ReactiveLocationProvider
 import java.util.*
+
+import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.toolbar_panel.*
+import kotlinx.android.synthetic.main.bottom_sheet.*
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
     GoogleApiClient.OnConnectionFailedListener, LocationListener, GoogleMap.OnMapLongClickListener,
@@ -84,43 +87,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
     private val MIN_CHARACTERS = 2
     private val DEBOUNCE_TIME = 400
 
-    @BindView(R.id.search_container)
-    lateinit var searchContainer: RelativeLayout
-    @BindView(R.id.search)
-    lateinit var searchView: EditText
-    @BindView(R.id.search_button)
-    lateinit var searchButton: ImageButton
-    @BindView(R.id.clear_search_image)
-    lateinit var clearSearchButton: ImageView
-    @BindView(R.id.resultlist)
-    lateinit var listResult: ListView
-    @BindView(R.id.route_container)
-    lateinit var routeContainer: LinearLayout
-    @BindView(R.id.evaluate_button)
-    lateinit var evaluateBtn: Button
-    @BindView(R.id.route_button)
-    lateinit var routeBtn: Button
-    @BindView(R.id.coordinates)
-    lateinit var coordinates: TextView
-    @BindView(R.id.longitude)
-    lateinit var longitude: TextView
-    @BindView(R.id.latitude)
-    lateinit var latitude: TextView
-    @BindView(R.id.city)
-    lateinit var city: TextView
-    @BindView(R.id.zipCode)
-    lateinit var zipCode: TextView
-//    @BindView(R.id.location_info)
-//    lateinit var locationInfoLayout: FrameLayout
-    @BindView(R.id.dot_progress_bar)
-    lateinit var progressBar: HorizontalDottedProgress
-
     private lateinit var searchOption: MenuItem
 
 
     private lateinit var map: GoogleMap
     private lateinit var googleApiClient: GoogleApiClient
-    private lateinit var currentLocation: Location
+    private var currentLocation: Location? = null
     private var currentLocationPoint: LocationPoint? = null
     private lateinit var geocoderPresenter: GeocoderPresenter
 
@@ -150,14 +122,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        setContentView(R.layout.activity_map)
 
-        ButterKnife.bind(this)
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        setUpToolBar()
         setUpToolBar()
         setUpMainVariables()
         setUpResultsList()
@@ -229,7 +199,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     override fun onDestroy() {
-        searchView.removeTextChangedListener(textWatcher)
+        searchET.removeTextChangedListener(textWatcher)
         googleApiClient.unregisterConnectionCallbacks(this)
         super.onDestroy()
     }
@@ -289,16 +259,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }
-        searchButton.setOnClickListener {
-            if (searchView.text.toString().isEmpty()) {
-                startVoiceRecognitionActivity()
-            } else {
-                retrieveLocationFrom(searchView.text.toString())
-                ScreenUtils.closeKeyboard(this)
-            }
-        }
-        clearSearchButton.setOnClickListener {
-            searchView.setText("")
+        clearSearchImage.setOnClickListener {
+            searchET.setText("")
         }
     }
 
@@ -313,7 +275,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     private fun setUpSearchView() {
-        searchView.setOnEditorActionListener { v, actionId, _ ->
+        searchET.setOnEditorActionListener { v, actionId, _ ->
             var handled = false
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 retrieveLocationFrom(v.text.toString())
@@ -323,7 +285,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
             handled
         }
         textWatcher = getSearchTextWatcher()
-        searchView.addTextChangedListener(textWatcher)
+        searchET.addTextChangedListener(textWatcher)
     }
 
     private fun getSearchTextWatcher(): TextWatcher {
@@ -337,16 +299,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
                     adapter.clear()
                     adapter.notifyDataSetChanged()
                     showLocationInfoLayout()
-                    clearSearchButton.visibility = View.INVISIBLE
-                    searchButton.setImageResource(R.drawable.ic_mic)
+                    clearSearchImage.visibility = View.INVISIBLE
 
                 } else {
                     if (charSequence.length > MIN_CHARACTERS) {
                         retrieveLocationWithDebounceTimeFrom(charSequence.toString())
                     }
-                    clearSearchButton.visibility = View.VISIBLE
-
-                    searchButton.setImageResource(R.drawable.ic_search)
+                    clearSearchImage.visibility = View.VISIBLE
 
                 }
             }
@@ -359,14 +318,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
 
     @SuppressLint("RestrictedApi")
     private fun setUpFloatingButtons() {
-        val btnMyLocation = findViewById<FloatingActionButton>(R.id.btn_location)
         btnMyLocation.setOnClickListener {
             geocoderPresenter.getLastKnownLocation()
             track(TrackEvents.didLocalizeMe)
         }
 
-        val btnSatellite = findViewById<FloatingActionButton>(R.id.btn_satellite)
-        btnSatellite!!.setOnClickListener {
+        btnSatellite.setOnClickListener {
             map.setMapType(if (map.getMapType() == MAP_TYPE_SATELLITE) MAP_TYPE_NORMAL else MAP_TYPE_SATELLITE)
             btnSatellite.setImageResource(
                 if (map.getMapType() == MAP_TYPE_SATELLITE) R.drawable.ic_satellite_off else R.drawable.ic_satellite_on
@@ -374,8 +331,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
         }
         btnSatellite.visibility = if (enableSatelliteView) View.VISIBLE else View.GONE
 
-        val btnTraffic = findViewById<FloatingActionButton>(R.id.btn_traffic)
-        btnTraffic!!.setOnClickListener { view ->
+        btnTraffic.setOnClickListener { view ->
             if (map != null && btnTraffic != null) {
                 map.isTrafficEnabled = !map.isTrafficEnabled
                 btnTraffic.setImageResource(
@@ -418,7 +374,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
         when (requestCode) {
             REQUEST_PLACE_PICKER -> if (resultCode == Activity.RESULT_OK) {
                 val matches = data!!.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                searchView = findViewById(R.id.search)
                 retrieveLocationFrom(matches[0])
             }
             else -> {
@@ -465,12 +420,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
 
     override fun onMapReady(googleMap: GoogleMap) {
 
-        if (map == null) {
-            map = googleMap
-            setDefaultMapSettings()
-            setCurrentPositionLocation()
-            setPoint()
-        }
+        map = googleMap
+        setDefaultMapSettings()
+        setCurrentPositionLocation()
+        setPoint()
 
     }
 
@@ -589,11 +542,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
             currentLocation = Location(getString(R.string.network_resource))
         }
 
-        currentLocation.setLatitude(address.latitude)
-        currentLocation.setLongitude(address.longitude)
+        currentLocation?.setLatitude(address.latitude)
+        currentLocation?.setLongitude(address.longitude)
         setNewMapMarker(LatLng(address.latitude, address.longitude))
         //setLocationInfo(address);
-        searchView.setText("")
+        searchET.setText("")
     }
 
     private fun setNewMapMarker(latLng: LatLng) {
@@ -619,8 +572,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
                         currentLocation = Location(getString(R.string.network_resource))
                     }
                     currentLocationPoint = null
-                    currentLocation.setLongitude(marker.position.longitude)
-                    currentLocation.setLatitude(marker.position.latitude)
+                    currentLocation?.setLongitude(marker.position.longitude)
+                    currentLocation?.setLatitude(marker.position.latitude)
                     setCurrentPositionLocation()
                 }
             })
@@ -700,8 +653,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     private fun setCoordinatesInfo(latLng: LatLng) {
-        this.latitude.text = String.format("%s: %s", getString(R.string.latitude), latLng.latitude)
-        this.longitude.text = String.format("%s: %s", getString(R.string.longitude), latLng.longitude)
+//        latitude.text = String.format("%s: %s", getString(R.string.latitude), latLng.latitude)
+//        longitude.text = String.format("%s: %s", getString(R.string.longitude), latLng.longitude)
         //      showCoordinatesLayout();
     }
 
@@ -746,7 +699,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
         if (currentLocation != null) {
             setCurrentPositionLocation()
         } else {
-            searchView = findViewById(R.id.search)
             retrieveLocationFrom(Locale.getDefault().displayCountry)
             hasWiderZoom = true
         }
@@ -812,7 +764,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
 
 
     fun showSearchContainer() {
-        ScreenUtils.slideViewDown(this, searchContainer)
+        AnimUtils.collapse(searchContainer)
         isSearchContainerVisible = true
         if (searchOption != null) {
             searchOption.isVisible = false
@@ -820,7 +772,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleApiClient.Co
     }
 
     fun hideSearchContainer() {
-        ScreenUtils.slideViewUp(this, searchContainer)
+        AnimUtils.expand(searchContainer)
         isSearchContainerVisible = false
         if (searchOption != null) {
             searchOption.isVisible = true

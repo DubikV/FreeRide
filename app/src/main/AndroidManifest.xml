@@ -28,7 +28,7 @@
                 android:value="@string/google_maps_key" />
 
         <activity
-                android:name=".Trash.LocationPickerActivity"
+                android:name=".activity.MapsActivity"
                 android:label="@string/title_activity_map"
                 android:windowSoftInputMode="adjustPan"
                 android:theme="@style/AppTheme.Map">

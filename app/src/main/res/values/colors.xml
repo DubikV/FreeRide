@@ -12,6 +12,8 @@
     <color name="colorGrey">#50545A</color>
     <color name="colorSearchBackground">#0000</color>
 
+    <color name="colorTrans">#AA000000</color>
+
     <color name="colorDot1">#34ff8a</color>
     <color name="colorDot2">#ffff47</color>
     <color name="colorDot3">#ff4b4b</color>

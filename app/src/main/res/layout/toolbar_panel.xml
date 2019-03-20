@@ -30,7 +30,7 @@
             app:srcCompat="@mipmap/ic_launcher"/>
 
         <com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress
-            android:id="@+id/dot_progress_bar"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -47,7 +47,7 @@
             android:layout_gravity="center_vertical"
             android:layout_toEndOf="@+id/logo_image"
             android:textColor="@color/colorWhite"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
     </RelativeLayout>
 
