@@ -1,58 +1,24 @@
 package com.gmail.vanyadubik.freeride.Trash;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 import com.gmail.vanyadubik.freeride.R;
-import com.gmail.vanyadubik.freeride.geocoder.*;
-import com.gmail.vanyadubik.freeride.geocoder.api.AddressBuilder;
-import com.gmail.vanyadubik.freeride.geocoder.api.NetworkClient;
-import com.gmail.vanyadubik.freeride.geocoder.places.GooglePlacesDataSource;
-import com.gmail.vanyadubik.freeride.location.CountryLocaleRect;
-import com.gmail.vanyadubik.freeride.location.LocationPicker;
+import com.gmail.vanyadubik.freeride.geocoder.GeocoderPresenter;
+import com.gmail.vanyadubik.freeride.geocoder.GoogleGeocoderDataSource;
 import com.gmail.vanyadubik.freeride.model.LocationPoint;
-import com.gmail.vanyadubik.freeride.tracker.TrackEvents;
 import com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress;
-import com.gmail.vanyadubik.freeride.utils.PermissionUtils;
-import com.gmail.vanyadubik.freeride.utils.ScreenUtils;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.*;
-import pl.charmas.android.reactivelocation2.ReactiveLocationProvider;
+import com.google.android.gms.maps.model.Marker;
 
-import java.util.*;
-
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class LocationPickerActivity extends AppCompatActivity{
 

@@ -4,9 +4,9 @@
     >
 
   <item
-      android:id="@+id/action_voice"
+      android:id="@+id/action_search"
       android:icon="@drawable/ic_search"
-      android:title="@string/action_voice_title"
+      android:title="@string/action_search"
       app:showAsAction="ifRoom"/>
 
 </menu>
