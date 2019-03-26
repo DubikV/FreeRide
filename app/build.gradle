@@ -24,6 +24,15 @@ android {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }
+
+    signingConfigs {
+        config {
+            storeFile file('./keys/FreeRide.jks')
+            keyAlias 'FreeRide'
+            keyPassword '8253714'
+            storePassword '8253714'
+        }
+    }
 }
 
 ext {

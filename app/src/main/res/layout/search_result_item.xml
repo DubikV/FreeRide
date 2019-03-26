@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="3dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toStartOf="@+id/uppendText"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:padding="3dp"
+            android:theme="@style/TextStyle_Small_Bold_Accent" />
+
+        <ImageView
+            android:id="@+id/uppendText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_arrow_black"
+            tools:ignore="VectorDrawableCompat"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:padding="5dp"
+            android:rotation="45"/>
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/title"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:theme="@style/TextStyle_Small_Accent" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/colorBackground"
+        android:layout_gravity="bottom"/>
+
+</android.support.design.widget.CoordinatorLayout>

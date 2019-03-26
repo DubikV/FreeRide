@@ -1,8 +1,8 @@
 <resources>
 
     <style name="AppTheme.Map">
-        <item name="colorPrimary">@color/colorBlack</item>
-        <item name="colorPrimaryDark">@color/colorBlack</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorWhite</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -20,7 +20,7 @@
     </style>
 
     <style name="Map_EditTextStyle" parent="@android:style/Widget.EditText">
-        <item name="android:background">@color/colorBlack</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorWhite</item>
         <item name="android:textColorHint">@color/colorGrey</item>
         <item name="colorControlNormal">@color/colorWhite</item>
@@ -31,5 +31,46 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+    <style name="WhiteDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="TextStyle_Large_Accent" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Standart_Accent" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Standart_White" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Small_Accent" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Small_White" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Small_Bold_Accent" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 </resources>

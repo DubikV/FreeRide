@@ -1,29 +1,33 @@
 package com.gmail.vanyadubik.freeride.activity
 
+
 import android.Manifest
 import android.content.pm.PackageManager
-import android.location.Address
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.gmail.vanyadubik.freeride.R
+import com.gmail.vanyadubik.freeride.adapter.ResultSearchAdapter
+import com.gmail.vanyadubik.freeride.common.Consts.TOKEN
+import com.gmail.vanyadubik.freeride.model.dto.Poi
+import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
 import com.gmail.vanyadubik.freeride.utils.AnimUtils
-import com.gmail.vanyadubik.freeride.utils.PermissionUtils.requestPermission
+import com.gmail.vanyadubik.freeride.utils.SharedStorage
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-
-
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.toolbar_panel.*
-import kotlinx.android.synthetic.main.bottom_sheet.*
+import java.util.*
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
+
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.View{
 
     private lateinit var map: GoogleMap
     private var isSearchContainerVisible = false
@@ -31,7 +35,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
     private lateinit var searchOption: MenuItem
 
 
-    private lateinit var selectedAddress: Address
+    private lateinit var mapsRepository: MapsRepository
+    private lateinit var adapterResult: ResultSearchAdapter
+    private var selectedPoi: Poi? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,11 +62,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         if (id == R.id.action_search) {
-         //   if (selectedAddress == null) {
+            if(selectedPoi!=null){
+                selectedPoi = null
+                hideRouteContainer()
+                logoImage.visibility = View.VISIBLE
+                progressBar.visibility = View.VISIBLE
+                searchResult.text = ""
+            }else{
                 showSearchContainer()
-//            } else {
-//                hideRouteContainer()
-//            }
+            }
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -89,9 +99,29 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
         super.onBackPressed()
     }
 
+    override fun onShowPoiList(list: List<Poi>) {
+        progressBar.hideAnimation()
+        adapterResult.setList(list)
+    }
+
+    override fun onErrorApi(textError: String) {
+        progressBar.hideAnimation()
+    }
+
+    override fun onStartLoad() {
+        progressBar.showAnimation()
+    }
+
+    override fun onShowPoiDetail(poiDetailed: PoiDetailed) {
+        progressBar.hideAnimation()
+        showRouteContainer()
+    }
+
     private fun initStartData() {
 
         progressBar.hideAnimation()
+
+        mapsRepository = MapsRepository(this, this)
 
         searchET.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -102,14 +132,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if(p0?.length!! >3){
-                    progressBar.showAnimation()
+                    mapsRepository.getPoiByName(p0.toString())
                 }
             }
         })
+
+        if(SharedStorage.getString(this, TOKEN, "")?.isEmpty()!!){
+            SharedStorage.setString(this, TOKEN, UUID.randomUUID().toString())
+        }
+
+        adapterResult = ResultSearchAdapter(this, object : ResultSearchAdapter.ClickListener{
+            override fun onItemClick(position: Int) {
+                selectedPoi = adapterResult.getSelectedItem(position)
+                onSelectedSearchPoi()
+            }
+
+            override fun onClickUpperText(position: Int) {
+                searchET.setText(adapterResult.getSelectedItem(position)?.name)
+            }
+
+        })
+        searchResultRV.layoutManager = LinearLayoutManager(this)
+        searchResultRV.adapter = adapterResult
     }
 
     private fun initClicklisteners() {
         clearSearchImage.setOnClickListener {
+            adapterResult.clear()
             if(searchET.text.isEmpty()){
                 hideSearchContainer();
             }else{
@@ -131,10 +180,31 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
         searchOption.setIcon(R.drawable.ic_search)
     }
 
+    private fun showRouteContainer() {
+        AnimUtils.expand(routeContainer)
+        isRouteContainerVisible = true
+        searchOption.setIcon(R.drawable.ic_clear)
+    }
+
     private fun hideRouteContainer() {
         AnimUtils.collapse(routeContainer)
         isRouteContainerVisible = false
         searchOption.setIcon(R.drawable.ic_search)
+    }
+
+    private fun onSelectedSearchPoi() {
+        if (isSearchContainerVisible) {
+            hideSearchContainer()
+        }
+        selectedPoi?.id?.let { mapsRepository.getPoiDetail(it) }
+        adapterResult.clear()
+
+        logoImage.visibility = View.GONE
+        progressBar.visibility = View.GONE
+        searchResult.text = selectedPoi?.name
+        searchET.setText("")
+        searchOption.setIcon(R.drawable.ic_clear)
+        showRouteContainer()
     }
 
 }

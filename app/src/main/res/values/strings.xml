@@ -14,4 +14,29 @@
     <string name="longitude">Longitude</string>
     <string name="latitude">Latitude</string>
     <string name="coordinates">Coordinates</string>
+
+    <!--Sync-->
+    <string name="loading_error">Не завантажено</string>
+    <string name="error_no_data">Відсутні дані!</string>
+    <string name="error_data_server">Помилка обробки даних на сервері!</string>
+    <string name="error_retrieving_data">Помилка отримання даних!</string>
+    <string name="error_sending_data">Помилка віправки даних!</string>
+    <string name="error_internet_connecting">Відсутне з\'єднання з інтернетом!</string>
+    <string name="error_sync">Помилка запиту</string>
+
+    <!--AlertDialog-->
+    <string name="questions_exit">Ви впевнені, що хочете вийти?</string>
+    <string name="questions_save_changes">Зберегти зміни?</string>
+    <string name="questions_select_element">Вибрати елемент?</string>
+    <string name="questions_title_info">Інфо</string>
+    <string name="questions_answer_yes">Так</string>
+    <string name="questions_answer_save">Зберегти</string>
+    <string name="questions_answer_no">Ні</string>
+    <string name="questions_answer_cancel">Відмінити</string>
+    <string name="questions_answer_ok">Ок</string>
+    <string name="questions_title_question">Питання</string>
+    <string name="questions_title_error">Помилка</string>
+    <string name="questions_title_successful">Успішно</string>
+    <string name="questions_select_from_list">Виберіть зі списку</string>
+
 </resources>

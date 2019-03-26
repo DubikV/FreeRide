@@ -1,54 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
+<android.support.design.widget.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/toolbar"
-    android:minHeight="?attr/actionBarSize"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:elevation="2dp"
-    android:background="@color/colorBlack"
-    app:theme="@style/ThemeOverlay.AppCompat.Light"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    tools:ignore="UnusedAttribute,elevation">
+    android:theme="@style/AppTheme.AppBarOverlay">
 
-    <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:elevation="2dp"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        tools:ignore="UnusedAttribute,elevation">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/logoImage"
-            android:layout_width="@dimen/logo_mini_size"
-            android:layout_height="@dimen/logo_mini_size"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
-            android:background="@color/colorBlack"
-            android:src="@mipmap/ic_launcher"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/logoImage"
-            android:layout_marginLeft="@dimen/horiz_dot_marging"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/logoImage"
+                android:layout_width="@dimen/logo_mini_size"
+                android:layout_height="@dimen/logo_mini_size"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:src="@mipmap/ic_launcher"/>
 
-        <TextView
-            android:id="@+id/search_result"
+            <com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:id="@+id/searchResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_toEndOf="@+id/logoImage"
+                android:theme="@style/TextStyle_Small_White"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:id="@+id/searchContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center_vertical"
-            android:layout_toEndOf="@+id/logoImage"
-            android:textColor="@color/colorWhite"
-            android:visibility="visible"/>
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:padding="3dp">
 
-    </RelativeLayout>
+            <EditText
+                android:id="@+id/searchET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:hint="@string/search_hint"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:theme="@style/Map_EditTextStyle"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"
+                android:maxLines="1"
+                android:layout_toStartOf="@+id/clearSearchImage"/>
 
-</android.support.v7.widget.Toolbar>
+            <ImageView
+                android:id="@+id/clearSearchImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/search_hint"
+                android:src="@drawable/ic_clear"
+                android:visibility="visible"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="5dp"/>
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/searchResultRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/searchET"
+            android:background="@color/colorWhite"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/routeContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:padding="3dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/evaluateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/evaluate_button"
+            android:text="Button"
+            android:textColor="@color/colorWhite"/>
+
+        <Button
+            android:id="@+id/routeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/route_button"
+            android:text="Button"
+            android:textColor="@color/colorWhite"/>
+    </LinearLayout>
+
+</android.support.design.widget.AppBarLayout>

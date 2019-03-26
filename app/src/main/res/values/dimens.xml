@@ -4,4 +4,9 @@
     <dimen name="horiz_dot_marging">100dp</dimen>
     <dimen name="information_bottom_margin">24dp</dimen>
     <dimen name="gap">8dp</dimen>
+
+    <dimen name="text_size_large">25dp</dimen>
+    <dimen name="text_size_middle">16dp</dimen>
+    <dimen name="text_size_small">10dp</dimen>
+
 </resources>
