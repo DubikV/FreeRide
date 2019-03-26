@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.location;
+package com.gmail.vanyadubik.freeride.Trash.location;
 
 import com.google.android.gms.maps.model.LatLng;
 

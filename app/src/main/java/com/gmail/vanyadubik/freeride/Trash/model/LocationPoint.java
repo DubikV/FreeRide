@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.model;
+package com.gmail.vanyadubik.freeride.Trash.model;
 
 import android.location.Location;
 import android.os.Parcel;

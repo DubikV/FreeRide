@@ -1,8 +1,8 @@
-package com.gmail.vanyadubik.freeride.geocoder;
+package com.gmail.vanyadubik.freeride.Trash.geocoder;
 
 import android.location.Address;
-import com.gmail.vanyadubik.freeride.geocoder.api.AddressBuilder;
-import com.gmail.vanyadubik.freeride.geocoder.api.NetworkClient;
+import com.gmail.vanyadubik.freeride.Trash.geocoder.api.AddressBuilder;
+import com.gmail.vanyadubik.freeride.Trash.geocoder.api.NetworkClient;
 import com.google.android.gms.maps.model.LatLng;
 import io.reactivex.Observable;
 import org.json.JSONException;

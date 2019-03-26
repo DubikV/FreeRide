@@ -1,9 +1,9 @@
-package com.gmail.vanyadubik.freeride.geocoder;
+package com.gmail.vanyadubik.freeride.Trash.geocoder;
 
 import android.annotation.SuppressLint;
 import android.location.Address;
 import android.support.annotation.NonNull;
-import com.gmail.vanyadubik.freeride.geocoder.places.GooglePlacesDataSource;
+import com.gmail.vanyadubik.freeride.Trash.geocoder.places.GooglePlacesDataSource;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import io.reactivex.Observable;

@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.geocoder.api;
+package com.gmail.vanyadubik.freeride.Trash.geocoder.api;
 
 public class NetworkException extends RuntimeException {
   public NetworkException() {

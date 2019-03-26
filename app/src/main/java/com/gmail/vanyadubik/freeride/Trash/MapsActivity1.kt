@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.activity
+package com.gmail.vanyadubik.freeride.Trash
 
 import android.location.Address
 import android.location.Location
@@ -9,8 +9,8 @@ import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.*
 import com.gmail.vanyadubik.freeride.R
-import com.gmail.vanyadubik.freeride.geocoder.*
-import com.gmail.vanyadubik.freeride.model.LocationPoint
+import com.gmail.vanyadubik.freeride.Trash.geocoder.*
+import com.gmail.vanyadubik.freeride.Trash.model.LocationPoint
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 

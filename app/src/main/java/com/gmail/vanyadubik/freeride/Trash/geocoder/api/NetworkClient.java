@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.geocoder.api;
+package com.gmail.vanyadubik.freeride.Trash.geocoder.api;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;

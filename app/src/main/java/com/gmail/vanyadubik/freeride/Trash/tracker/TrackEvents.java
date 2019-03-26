@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.tracker;
+package com.gmail.vanyadubik.freeride.Trash.tracker;
 
 public enum TrackEvents {
   googleApiConnectionFailed("Connection Failed"),

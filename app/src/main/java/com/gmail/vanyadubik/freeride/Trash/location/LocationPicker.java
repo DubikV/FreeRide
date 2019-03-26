@@ -1,6 +1,6 @@
-package com.gmail.vanyadubik.freeride.location;
+package com.gmail.vanyadubik.freeride.Trash.location;
 
-import com.gmail.vanyadubik.freeride.tracker.LocationPickerTracker;
+import com.gmail.vanyadubik.freeride.Trash.tracker.LocationPickerTracker;
 
 public class LocationPicker {
 

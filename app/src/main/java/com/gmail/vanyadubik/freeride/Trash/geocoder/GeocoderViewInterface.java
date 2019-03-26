@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.geocoder;
+package com.gmail.vanyadubik.freeride.Trash.geocoder;
 
 import android.location.Address;
 import android.location.Location;

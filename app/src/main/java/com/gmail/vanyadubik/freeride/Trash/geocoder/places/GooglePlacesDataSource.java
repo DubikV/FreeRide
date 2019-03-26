@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.geocoder.places;
+package com.gmail.vanyadubik.freeride.Trash.geocoder.places;
 
 import android.annotation.SuppressLint;
 import android.location.Address;

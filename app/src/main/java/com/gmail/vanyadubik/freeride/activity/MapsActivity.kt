@@ -72,8 +72,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
             Manifest.permission.ACCESS_FINE_LOCATION)
 
         if (permission == PackageManager.PERMISSION_GRANTED) {
-            map?.isMyLocationEnabled = true
-            map?.uiSettings.isMyLocationButtonEnabled = false
+            map.isMyLocationEnabled = true
+            map.uiSettings.isMyLocationButtonEnabled = false
         }
     }
 
@@ -121,26 +121,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback{
     private fun showSearchContainer() {
         AnimUtils.expand(searchContainer)
         isSearchContainerVisible = true
-        if (searchOption != null) {
-            searchOption.isVisible = false
-        }
+        searchOption.isVisible = false
     }
 
     private fun hideSearchContainer() {
         AnimUtils.collapse(searchContainer)
         isSearchContainerVisible = false
-        if (searchOption != null) {
-            searchOption.isVisible = true
-            searchOption.setIcon(R.drawable.ic_search)
-        }
+        searchOption.isVisible = true
+        searchOption.setIcon(R.drawable.ic_search)
     }
 
     private fun hideRouteContainer() {
         AnimUtils.collapse(routeContainer)
         isRouteContainerVisible = false
-        if (searchOption != null) {
-            searchOption.setIcon(R.drawable.ic_search)
-        }
+        searchOption.setIcon(R.drawable.ic_search)
     }
 
 }
