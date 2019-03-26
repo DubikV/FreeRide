@@ -73,4 +73,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextStyle_Standart_White_Button" parent="android:Widget.Button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
 </resources>

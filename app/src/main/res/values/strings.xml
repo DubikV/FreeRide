@@ -39,4 +39,7 @@
     <string name="questions_title_successful">Успішно</string>
     <string name="questions_select_from_list">Виберіть зі списку</string>
 
+    <string name="add_review">Добавити відгук</string>
+    <string name="route">Маршрут</string>
+
 </resources>

@@ -130,8 +130,8 @@
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/evaluate_button"
-            android:text="Button"
-            android:textColor="@color/colorWhite"/>
+            android:text="@string/add_review"
+            android:theme="@style/TextStyle_Standart_White_Button"/>
 
         <Button
             android:id="@+id/routeBtn"
@@ -140,8 +140,8 @@
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/route_button"
-            android:text="Button"
-            android:textColor="@color/colorWhite"/>
+            android:text="@string/route"
+            android:theme="@style/TextStyle_Standart_White_Button"/>
     </LinearLayout>
 
 </android.support.design.widget.AppBarLayout>
