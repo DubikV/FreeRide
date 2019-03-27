@@ -175,6 +175,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
             }
         }
 
+        btnTraffic.setOnClickListener {
+            
+        }
+
+        btnMyLocation.setOnClickListener {
+
+        }
+
         reviewBtn.setOnClickListener {
             showAddReview(reviewBtn)
         }
