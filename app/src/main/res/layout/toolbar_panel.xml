@@ -32,14 +32,15 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:src="@mipmap/ic_launcher"/>
+                android:src="@drawable/ic_launcher_foreground"/>
 
             <com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
+                android:layout_toEndOf="@+id/logoImage"
+                android:layout_marginLeft="@dimen/horiz_dot_marging"/>
 
             <TextView
                 android:id="@+id/searchResult"
@@ -48,9 +49,10 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
                 android:layout_toEndOf="@+id/logoImage"
                 android:theme="@style/TextStyle_Small_White"
+                android:padding="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:visibility="visible"/>
@@ -124,8 +126,8 @@
         android:visibility="gone">
 
         <Button
-            android:id="@+id/evaluateBtn"
-            android:layout_width="wrap_content"
+            android:id="@+id/reviewBtn"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
@@ -135,7 +137,7 @@
 
         <Button
             android:id="@+id/routeBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"

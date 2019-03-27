@@ -5,15 +5,10 @@
     <string name="no_geocoder_available">Service not available</string>
     <string name="load_location_error">Something went wrong. Please try again.</string>
     <string name="no_search_results">There are no results for your search</string>
-    <string name="network_resource">network</string>
-    <string name="unknown_location">unknown location</string>
-    <string name="voice_search_promp">Search by voice…</string>
-    <string name="voice_search_extra_language">en-EN</string>
-    <string name="action_search">Search</string>
-    <string name="search_hint">Search</string>
-    <string name="longitude">Longitude</string>
-    <string name="latitude">Latitude</string>
-    <string name="coordinates">Coordinates</string>
+    <string name="action_search">Пошук</string>
+
+
+    <string name="search_hint">Куди прямуєте?</string>
 
     <!--Sync-->
     <string name="loading_error">Не завантажено</string>
@@ -38,8 +33,18 @@
     <string name="questions_title_error">Помилка</string>
     <string name="questions_title_successful">Успішно</string>
     <string name="questions_select_from_list">Виберіть зі списку</string>
+    <string name="questions_review_place">Як ви оцінюєте доступність об\'єкту?</string>
+    <string name="available">Доступний</string>
+    <string name="troublesome">Проблемний</string>
+    <string name="inaccessible">Недоступний</string>
+    <string name="rate_later">Оцінити пізніше</string>
 
-    <string name="add_review">Добавити відгук</string>
+
+    <string name="leave_comment">Залиште коментар</string>
+    <string name="leave_comment_example">Наприклад ( відсутні пандуси…)</string>
+    <string name="leave_comment_miss">Пропустити</string>
+
+    <string name="add_review">Оцінити об\'єкт</string>
     <string name="route">Маршрут</string>
 
 </resources>

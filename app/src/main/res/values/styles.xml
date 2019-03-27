@@ -22,10 +22,14 @@
     <style name="Map_EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:textColorHint">@color/colorGrey</item>
+        <item name="android:textColorHint">@color/warmGrey</item>
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="colorControlActivated">@color/colorWhite</item>
         <item name="colorControlHighlight">@color/colorWhite</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
 
@@ -44,6 +48,19 @@
 
     <style name="TextStyle_Standart_Accent" parent="android:Widget.TextView">
         <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+    </style>
+
+    <style name="TextStyle_Standart_Bold_Accent" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextStyle_Standart_ElectricBlue" parent="android:Widget.TextView">
+        <item name="android:textColor">@color/electricBlue</item>
         <item name="android:textSize">@dimen/text_size_middle</item>
         <item name="android:fontFamily">@string/font_family_regular</item>
     </style>

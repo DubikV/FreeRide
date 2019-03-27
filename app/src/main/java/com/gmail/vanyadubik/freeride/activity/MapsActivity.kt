@@ -2,21 +2,30 @@ package com.gmail.vanyadubik.freeride.activity
 
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.telephony.TelephonyManager
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.PopupWindow
+import android.widget.TextView
 import com.gmail.vanyadubik.freeride.R
 import com.gmail.vanyadubik.freeride.adapter.ResultSearchAdapter
 import com.gmail.vanyadubik.freeride.common.Consts.TOKEN
 import com.gmail.vanyadubik.freeride.model.dto.Poi
 import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
+import com.gmail.vanyadubik.freeride.utils.ActivityUtils
 import com.gmail.vanyadubik.freeride.utils.AnimUtils
 import com.gmail.vanyadubik.freeride.utils.SharedStorage
 import com.google.android.gms.maps.GoogleMap
@@ -165,6 +174,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
                 searchET.text.clear()
             }
         }
+
+        reviewBtn.setOnClickListener {
+            showAddReview(reviewBtn)
+        }
     }
 
     private fun showSearchContainer() {
@@ -205,6 +218,55 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
         searchET.setText("")
         searchOption.setIcon(R.drawable.ic_clear)
         showRouteContainer()
+    }
+
+    private fun showAddReview(v: View) {
+
+        var popupWindow: PopupWindow? = null
+
+        val layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        val selectedView = layoutInflater.inflate(R.layout.layout_review, null)
+
+
+        if (popupWindow != null) {
+            if (popupWindow.isShowing()) {
+                popupWindow.dismiss()
+            }
+        }
+
+        popupWindow = PopupWindow(selectedView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+
+        popupWindow.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.colorSearchBackground)))
+        popupWindow.setFocusable(true)
+        popupWindow.setOutsideTouchable(true)
+        popupWindow.update()
+        popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+            if (popupWindow != null) {
+                if (popupWindow.isShowing()) {
+                    AnimUtils.exitAnimation(v, Runnable { popupWindow.dismiss() })
+                }
+            }
+        })
+
+
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0)
+        AnimUtils.enterAnimation(v, selectedView)
+
+
+//        val builder = AlertDialog.Builder(this, R.style.WhiteDialogTheme)
+//        val viewInflated = LayoutInflater.from(this).inflate(R.layout.layout_review, null)
+//
+//        builder.setView(viewInflated)
+//
+//
+//
+//        builder.setCancelable(true)
+//        val alertQuestion: AlertDialog = builder.create()
+//
+//        alertQuestion.show()
+       // alertQuestion!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
 }

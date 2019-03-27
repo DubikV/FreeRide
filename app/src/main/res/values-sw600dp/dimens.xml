@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <dimen name="horiz_dot_marging">200dp</dimen>
+
+    <dimen name="text_size_large">30dp</dimen>
+    <dimen name="text_size_middle">20dp</dimen>
+    <dimen name="text_size_small">15dp</dimen>
+
+</resources>

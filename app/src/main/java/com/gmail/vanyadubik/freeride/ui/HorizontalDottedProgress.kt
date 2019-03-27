@@ -9,6 +9,7 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.Transformation
+import com.gmail.vanyadubik.freeride.R
 
 import java.util.ArrayList
 
@@ -54,15 +55,15 @@ class HorizontalDottedProgress : View {
         if (paintList == null) {
             paintList = ArrayList()
             val paint1 = Paint()
-            paint1.color = Color.parseColor("#34ff8a")
+            paint1.color = context?.resources?.getColor(R.color.weirdGreen)!!
             paintList!!.add(paint1)
 
             val paint2 = Paint()
-            paint2.color = Color.parseColor("#ffff47")
+            paint2.color = context?.resources?.getColor(R.color.bananaYellow)!!
             paintList!!.add(paint2)
 
             val paint3 = Paint()
-            paint3.color = Color.parseColor("#ff4b4b")
+            paint3.color = context?.resources?.getColor(R.color.coral)!!
             paintList!!.add(paint3)
         }
     }
@@ -164,6 +165,7 @@ class HorizontalDottedProgress : View {
 
     private fun stopAnimation() {
         this.clearAnimation()
+        invalidate()
     }
 
 

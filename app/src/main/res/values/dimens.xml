@@ -9,4 +9,6 @@
     <dimen name="text_size_middle">16dp</dimen>
     <dimen name="text_size_small">10dp</dimen>
 
+    <dimen name="review_circle_size">70dp</dimen>
+
 </resources>
