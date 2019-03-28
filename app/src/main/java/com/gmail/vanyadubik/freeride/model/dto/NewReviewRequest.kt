@@ -7,5 +7,5 @@ class NewReviewRequest(
 
         @field:SerializedName("review") var review: String?,
 
-        @field:SerializedName("date") var date: Int
+        @field:SerializedName("date") var date: Long
 )

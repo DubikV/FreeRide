@@ -4,11 +4,14 @@ import android.content.Context
 import android.util.Log
 import com.gmail.vanyadubik.freeride.R
 import com.gmail.vanyadubik.freeride.common.Consts.TAGLOG_SYNC
+import com.gmail.vanyadubik.freeride.model.dto.NewReviewRequest
 import com.gmail.vanyadubik.freeride.model.dto.Poi
 import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
+import com.gmail.vanyadubik.freeride.model.dto.PoiReview
 import com.gmail.vanyadubik.freeride.service.sync.SyncService
 import com.gmail.vanyadubik.freeride.service.sync.SyncServiceFactory
 import com.gmail.vanyadubik.freeride.utils.NetworkUtils
+import com.google.gson.Gson
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -24,14 +27,14 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
             return
         }
 
-        mainView?.onStartLoad()
+        mainView?.onStartLoadSearch()
 
 
 
         SyncServiceFactory.createService(
                 SyncService::class.java, mContex)
                 .getByPointName(name)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<List<Poi>> {
                     override fun onSubscribe(d: Disposable) {
@@ -74,14 +77,13 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
             return
         }
 
-        mainView?.onStartLoad()
-
+        mainView?.onStartLoadDetail()
 
 
         SyncServiceFactory.createService(
                 SyncService::class.java, mContex)
                 .getDetailPoint(id)
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(object : Observer<PoiDetailed> {
                     override fun onSubscribe(d: Disposable) {
@@ -115,4 +117,93 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
                 })
     }
 
+    override fun addReview(idPoi: String, newReviewRequest: NewReviewRequest) {
+
+        if (!NetworkUtils.checkEthernet(mContex)) {
+            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_internet_connecting))
+            mainView?.onErrorApi(mContex.getString(R.string.error_internet_connecting))
+            return
+        }
+
+//        mainView?.onStartLoadDetail()
+
+        SyncServiceFactory.createService(
+                SyncService::class.java, mContex)
+                .setReview(idPoi, newReviewRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<String> {
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(result: String) {
+
+                        Log.i(TAGLOG_SYNC, "On next")
+                        mainView?.onAddReview()
+                    }
+
+                    override fun onError(e: Throwable) {
+                        if (!NetworkUtils.checkEthernet(mContex)) {
+                            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_internet_connecting))
+                            mainView?.onErrorApi(mContex.getString(R.string.error_internet_connecting))
+                            return
+                        }
+
+                        Log.e(TAGLOG_SYNC, e.toString())
+                        mainView?.onErrorApi(e.message.toString())
+                    }
+
+                    override fun onComplete() {}
+                })
+
+    }
+
+    override fun getReviews(idPoi: String, fromPos: Int, limit: Int) {
+
+        if (!NetworkUtils.checkEthernet(mContex)) {
+            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_internet_connecting))
+            mainView?.onErrorApi(mContex.getString(R.string.error_internet_connecting))
+            return
+        }
+
+        mainView?.onStartLoadListReview()
+
+        SyncServiceFactory.createService(
+                SyncService::class.java, mContex)
+                .getReview(idPoi, fromPos, limit)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<List<PoiReview>> {
+                    override fun onSubscribe(d: Disposable) {
+
+                    }
+
+                    override fun onNext(list: List<PoiReview>) {
+
+                        if (list == null) {
+                            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_no_data))
+                            mainView?.onErrorApi(mContex.getString(R.string.error_retrieving_data))
+                            return
+                        }
+
+                        Log.i(TAGLOG_SYNC, "On next")
+                        mainView?.onShowListReviews(list)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        if (!NetworkUtils.checkEthernet(mContex)) {
+                            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_internet_connecting))
+                            mainView?.onErrorApi(mContex.getString(R.string.error_internet_connecting))
+                            return
+                        }
+
+                        Log.e(TAGLOG_SYNC, e.toString())
+                        mainView?.onErrorApi(e.message.toString())
+                    }
+
+                    override fun onComplete() {}
+                })
+
+    }
 }

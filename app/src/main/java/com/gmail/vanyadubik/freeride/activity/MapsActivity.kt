@@ -6,25 +6,29 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
+import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.CoordinatorLayout
 import android.support.v4.content.ContextCompat
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.telephony.TelephonyManager
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.gmail.vanyadubik.freeride.R
 import com.gmail.vanyadubik.freeride.adapter.ResultSearchAdapter
+import com.gmail.vanyadubik.freeride.adapter.ReviewListAdapter
+import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_AVAILABLE
+import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_INACCESSIBLE
+import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_TROUBLESOME
+import com.gmail.vanyadubik.freeride.common.Consts.POI_REVIEW_URL
 import com.gmail.vanyadubik.freeride.common.Consts.TOKEN
+import com.gmail.vanyadubik.freeride.model.dto.NewReviewRequest
 import com.gmail.vanyadubik.freeride.model.dto.Poi
 import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
+import com.gmail.vanyadubik.freeride.model.dto.PoiReview
 import com.gmail.vanyadubik.freeride.utils.ActivityUtils
 import com.gmail.vanyadubik.freeride.utils.AnimUtils
 import com.gmail.vanyadubik.freeride.utils.SharedStorage
@@ -33,20 +37,21 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.toolbar_panel.*
+import kotlinx.android.synthetic.main.map_bottom_panel.*
 import java.util.*
-
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.View{
 
     private lateinit var map: GoogleMap
-    private var isSearchContainerVisible = false
-    private var isRouteContainerVisible = false
     private lateinit var searchOption: MenuItem
-
-
     private lateinit var mapsRepository: MapsRepository
     private lateinit var adapterResult: ResultSearchAdapter
+    private lateinit var poiBottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
+    private lateinit var reviewListAdapter: ReviewListAdapter
+
     private var selectedPoi: Poi? = null
+    private var isSearchContainerVisible = false
+    private var isRouteContainerVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +82,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
                 logoImage.visibility = View.VISIBLE
                 progressBar.visibility = View.VISIBLE
                 searchResult.text = ""
+                poiBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             }else{
                 showSearchContainer()
             }
@@ -105,6 +111,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
             hideRouteContainer()
             return
         }
+        if(poiBottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN){
+            poiBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        }
         super.onBackPressed()
     }
 
@@ -115,16 +124,48 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
 
     override fun onErrorApi(textError: String) {
         progressBar.hideAnimation()
+        ActivityUtils.showMessage(this, "", null, textError)
     }
 
-    override fun onStartLoad() {
+    override fun onStartLoadSearch() {
         progressBar.showAnimation()
     }
 
-    override fun onShowPoiDetail(poiDetailed: PoiDetailed) {
-        progressBar.hideAnimation()
-        showRouteContainer()
+    override fun onStartLoadDetail() {
+        poiBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        showContainer(false)
     }
+
+    override fun onShowPoiDetail(poiDetailed: PoiDetailed) {
+        showRouteContainer()
+        showPoiDetailContainer(poiDetailed)
+        selectedPoi?.id?.let { mapsRepository.getReviews(it, 0, 20) }
+    }
+
+    override fun onAddReview() {
+        ActivityUtils.showMessage(this,
+                getString(R.string.successfully),
+                resources.getDrawable(R.drawable.ic_check_white),
+                getString(R.string.rating_added))
+    }
+
+    override fun onShowListReviews(list: List<PoiReview>) {
+        if(list.isNotEmpty() || reviewListAdapter.itemCount>0){
+            listReview.visibility = View.VISIBLE
+            listReviewEmpty.visibility = View.GONE
+            reviewListAdapter.addist(list.toMutableList())
+        }else{
+            listReview.visibility = View.GONE
+            listReviewEmpty.visibility = View.VISIBLE
+        }
+        listReviewProgressBar.visibility = View.GONE
+    }
+
+    override fun onStartLoadListReview() {
+        listReviewEmpty.visibility = View.GONE
+        listReviewProgressBar.visibility = View.VISIBLE
+    }
+
 
     private fun initStartData() {
 
@@ -163,24 +204,60 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
         })
         searchResultRV.layoutManager = LinearLayoutManager(this)
         searchResultRV.adapter = adapterResult
+
+        poiBottomSheetBehavior = BottomSheetBehavior.from<CoordinatorLayout>(bottomSheet)
+        poiBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {}
+                    BottomSheetBehavior.STATE_EXPANDED -> {}
+                    BottomSheetBehavior.STATE_COLLAPSED -> {}
+                    BottomSheetBehavior.STATE_DRAGGING -> {}
+                    BottomSheetBehavior.STATE_SETTLING -> {}
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+        })
+        poiBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+        reviewListAdapter = ReviewListAdapter(this, object : ReviewListAdapter.ClickListener{
+            override fun onItemClick(position: Int) {
+            }
+
+            override fun onClickUpperText(position: Int) {
+            }
+
+        })
+        listReview.layoutManager = LinearLayoutManager(this)
+        listReview.adapter = reviewListAdapter
     }
 
     private fun initClicklisteners() {
         clearSearchImage.setOnClickListener {
+            progressBar.hideAnimation()
             adapterResult.clear()
             if(searchET.text.isEmpty()){
                 hideSearchContainer();
             }else{
                 searchET.text.clear()
             }
+            poiBottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
         btnTraffic.setOnClickListener {
-            
+            if (map != null && btnTraffic != null) {
+                map.isTrafficEnabled = !map.isTrafficEnabled
+                btnTraffic.setImageResource(
+                        if (map.isTrafficEnabled) R.drawable.ic_traffic_off else R.drawable.ic_traffic_on)
+            }
         }
 
         btnMyLocation.setOnClickListener {
-
+//            geocoderPresenter.getLastKnownLocation()
+//            track(TrackEvents.didLocalizeMe)
         }
 
         reviewBtn.setOnClickListener {
@@ -225,56 +302,150 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
         searchResult.text = selectedPoi?.name
         searchET.setText("")
         searchOption.setIcon(R.drawable.ic_clear)
-        showRouteContainer()
+        ActivityUtils.hideKeyboard(this, searchET)
+    }
+
+    private fun showContainer(show: Boolean) {
+        if (show) {
+            bottomSheetContent.setVisibility(View.VISIBLE)
+            shimmerViewContainer.stopShimmer()
+            shimmerViewContainer.visibility = View.GONE
+        } else {
+            bottomSheetContent.setVisibility(View.GONE)
+            shimmerViewContainer.startShimmer()
+            shimmerViewContainer.visibility = View.VISIBLE
+        }
+    }
+
+    private fun showPoiDetailContainer(poiDet : PoiDetailed){
+
+        when (poiDet.accessible) {
+            EVALUATION_AVAILABLE -> {
+                statusPoi.setTextColor(resources.getColor(R.color.weirdGreen))
+                statusPoi.text = getString(R.string.available) + " " + getString(R.string.object_text)
+            }
+            EVALUATION_TROUBLESOME -> {
+                statusPoi.setTextColor(resources.getColor(R.color.orangeYellow))
+                statusPoi.text = getString(R.string.troublesome) + " " + getString(R.string.object_text)
+            }
+            EVALUATION_INACCESSIBLE -> {
+                statusPoi.setTextColor(resources.getColor(R.color.coral))
+                statusPoi.text = getString(R.string.inaccessible) + " " + getString(R.string.object_text)
+            }
+        }
+        ratingsPoi.text = if(poiDet.reviews>0) getString(R.string.ratings) + " " + poiDet.reviews else getString(R.string.ratings_not_have)
+        namePoi.text = poiDet.name
+        typePoi.text = poiDet.types?.joinToString(separator = ", ")
+        addressPoi.text = poiDet.address
+        workinghoursPoi.text = poiDet.workinghours?.joinToString(separator = ", \n")
+
+        showContainer(true)
+
     }
 
     private fun showAddReview(v: View) {
 
-        var popupWindow: PopupWindow? = null
+//        var popupWindow: PopupWindow? = null
 
         val layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val selectedView = layoutInflater.inflate(R.layout.layout_review, null)
 
 
-        if (popupWindow != null) {
-            if (popupWindow.isShowing()) {
-                popupWindow.dismiss()
+//        if (popupWindow != null) {
+//            if (popupWindow.isShowing()) {
+//                popupWindow.dismiss()
+//            }
+//        }
+
+        var popupWindow = PopupWindow(selectedView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+
+        val available = selectedView.findViewById<LinearLayout>(R.id.available)
+        available.setOnClickListener {
+            if (popupWindow.isShowing) {
+                AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
+            }
+            showCommentReview(v, EVALUATION_AVAILABLE)
+        }
+
+        val troublesome = selectedView.findViewById<LinearLayout>(R.id.troublesome)
+        troublesome.setOnClickListener {
+            if (popupWindow.isShowing) {
+                AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
+            }
+            showCommentReview(v, EVALUATION_TROUBLESOME)
+        }
+
+        val inaccessible = selectedView.findViewById<LinearLayout>(R.id.inaccessible)
+        inaccessible.setOnClickListener {
+            if (popupWindow.isShowing) {
+                AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
+            }
+            showCommentReview(v, EVALUATION_INACCESSIBLE)
+        }
+
+        val rateLater = selectedView.findViewById<TextView>(R.id.rateLater)
+        rateLater.setOnClickListener {
+            if (popupWindow.isShowing) {
+                AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
             }
         }
 
-        popupWindow = PopupWindow(selectedView, LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT)
-
-        popupWindow.setBackgroundDrawable(ColorDrawable(getResources().getColor(R.color.colorSearchBackground)))
-        popupWindow.setFocusable(true)
-        popupWindow.setOutsideTouchable(true)
+        popupWindow.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorTrans)))
+        popupWindow.isFocusable = true
+        popupWindow.isOutsideTouchable = true
         popupWindow.update()
-        popupWindow.setOnDismissListener(PopupWindow.OnDismissListener {
+        popupWindow.setOnDismissListener {
             if (popupWindow != null) {
-                if (popupWindow.isShowing()) {
-                    AnimUtils.exitAnimation(v, Runnable { popupWindow.dismiss() })
+                if (popupWindow.isShowing) {
+                    AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
                 }
             }
-        })
+        }
 
 
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0)
         AnimUtils.enterAnimation(v, selectedView)
 
+    }
 
-//        val builder = AlertDialog.Builder(this, R.style.WhiteDialogTheme)
-//        val viewInflated = LayoutInflater.from(this).inflate(R.layout.layout_review, null)
-//
-//        builder.setView(viewInflated)
-//
-//
-//
-//        builder.setCancelable(true)
-//        val alertQuestion: AlertDialog = builder.create()
-//
-//        alertQuestion.show()
-       // alertQuestion!!.window!!.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+    private fun showCommentReview(v: View, status: Int) {
+
+        val layoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        val selectedView = layoutInflater.inflate(R.layout.layout_review_comment, null)
+
+        var popupWindow = PopupWindow(selectedView, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT)
+
+        popupWindow.setBackgroundDrawable(ColorDrawable(resources.getColor(R.color.colorTrans)))
+        popupWindow.isFocusable = true
+        popupWindow.isOutsideTouchable = true
+        popupWindow.update()
+        popupWindow.setOnDismissListener {
+            if (popupWindow != null) {
+                if (popupWindow.isShowing) {
+                    AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
+                }
+            }
+        }
+
+        val comment = selectedView.findViewById<TextView>(R.id.comment)
+
+        val rateCommentLater = selectedView.findViewById<TextView>(R.id.rateCommentLater)
+        rateCommentLater.setOnClickListener {
+            if (popupWindow.isShowing) {
+                AnimUtils.exitAnimation(selectedView, Runnable { popupWindow.dismiss() })
+            }
+            selectedPoi?.id?.let {
+                it1 -> mapsRepository.addReview(it1, NewReviewRequest(status, comment.text.toString(), Calendar.getInstance().timeInMillis))
+            }
+        }
+
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0)
+        AnimUtils.enterAnimation(v, selectedView)
+
     }
 
 }

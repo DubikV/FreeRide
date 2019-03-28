@@ -7,7 +7,7 @@ class PoiReview(
 
         @field:SerializedName("review") var review: String?,
 
-        @field:SerializedName("date") var date: Int,
+        @field:SerializedName("date") var date: Long,
 
         @field:SerializedName("user") var user: User?
 )

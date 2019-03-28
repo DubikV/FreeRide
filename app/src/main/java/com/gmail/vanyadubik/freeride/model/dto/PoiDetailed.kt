@@ -9,7 +9,7 @@ class PoiDetailed(
 
     @field:SerializedName("address") var address: String?,
 
-    @field:SerializedName("type") var type: String?,
+    @field:SerializedName("types") var types: List<String>?,
 
     @field:SerializedName("reviews") var reviews: Int,
 

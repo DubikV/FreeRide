@@ -35,11 +35,11 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_gps"
             app:fabSize="normal"
-            android:tint="?colorPrimary"
-            app:backgroundTint="@color/colorWhite"
-            app:rippleColor="@color/colorBackground"
+            android:tint="@color/colorWhite"
+            app:backgroundTint="@color/electricBlue"
+            app:rippleColor="@color/electricBlue"
             app:elevation="2dp"
-            tools:background="@color/colorWhite"
+            tools:background="@color/electricBlue"
             tools:ignore="elevation"
             android:layout_gravity="bottom|end"/>
 
@@ -63,16 +63,16 @@
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_traffic_on"
             app:fabSize="normal"
-            android:tint="?colorPrimary"
-            app:backgroundTint="@color/colorWhite"
-            app:rippleColor="@color/colorBackground"
+            android:tint="@color/colorWhite"
+            app:backgroundTint="@color/electricBlue"
+            app:rippleColor="@color/electricBlue"
             app:elevation="2dp"
-            tools:background="@color/colorWhite"
+            tools:background="@color/electricBlue"
             tools:ignore="elevation"
             android:layout_gravity="bottom|start"/>
 
     </LinearLayout>
 
-    <include layout="@layout/bottom_sheet"/>
+    <include layout="@layout/map_bottom_panel"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -21,9 +21,9 @@ interface SyncService {
     @GET(POI_REVIEW_URL)
     fun getReview(@Path("id") id: String,
                   @Query("offset") offset: Int,
-                  @Query("limit") limit: Int): Observable<PoiReview>
+                  @Query("limit") limit: Int): Observable<List<PoiReview>>
 
     @POST(POI_REVIEW_URL)
     fun setReview(@Path("id") id: String,
-                  @Body newReviewRequest: NewReviewRequest)
+                  @Body newReviewRequest: NewReviewRequest) : Observable<String>
 }

@@ -34,10 +34,24 @@
     <string name="questions_title_successful">Успішно</string>
     <string name="questions_select_from_list">Виберіть зі списку</string>
     <string name="questions_review_place">Як ви оцінюєте доступність об\'єкту?</string>
+    <string name="questions_review_comment">Залиште коментар</string>
     <string name="available">Доступний</string>
     <string name="troublesome">Проблемний</string>
     <string name="inaccessible">Недоступний</string>
     <string name="rate_later">Оцінити пізніше</string>
+    <string name="rate_leave">Продовжити</string>
+    <string name="ratings_not_have">Немає оцінок</string>
+    <string name="unknown_object">Невідомий об\'єкт</string>
+    <string name="ratings">Oцінок</string>
+    <string name="object_text">об\'єкт</string>
+    <string name="ratings_users">Оцінки користувачів</string>
+    <string name="list_review_empty_text1">Поки немає оцінок</string>
+    <string name="list_review_empty_text2">Допоможіть оцінити об\'єкт</string>
+    <string name="successfully">Успішно</string>
+    <string name="rating_added">Дякуємо, Ваша думка важлива для нас</string>
+
+
+
 
 
     <string name="leave_comment">Залиште коментар</string>

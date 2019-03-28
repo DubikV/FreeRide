@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
                 android:layout_toEndOf="@+id/logoImage"
-                android:theme="@style/TextStyle_Small_White"
+                android:theme="@style/TextStyle_Standart_White"
                 android:padding="5dp"
                 android:ellipsize="end"
                 android:maxLines="1"
@@ -86,11 +86,12 @@
                 android:imeOptions="actionSearch"
                 android:inputType="text"
                 android:theme="@style/Map_EditTextStyle"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
                 android:padding="5dp"
                 android:maxLines="1"
-                android:layout_toStartOf="@+id/clearSearchImage"/>
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/clearSearchImage"
+                app:backgroundTint="@color/colorPrimary"/>
 
             <ImageView
                 android:id="@+id/clearSearchImage"

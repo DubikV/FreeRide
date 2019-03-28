@@ -70,4 +70,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
     implementation "io.reactivex.rxjava2:rxandroid:$RX_ANDROID_VERSION"
     implementation "io.reactivex.rxjava2:rxjava:$RX_JAVA_VERSION"
+    implementation 'com.facebook.shimmer:shimmer:0.3.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 }

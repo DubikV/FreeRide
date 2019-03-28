@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/colorSearchBackground">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/review_background"
+        android:layout_gravity="center">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/questions_review_comment"
+            android:theme="@style/TextStyle_Standart_Accent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorBackground"/>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/comment"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/leave_comment_example"
+                android:padding="5dp"
+                android:inputType="text"
+                android:theme="@style/TextStyle_Standart_Accent_EditText"
+                app:backgroundTint="@color/colorWhite"/>
+
+        </ScrollView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorBackground"/>
+
+        <TextView
+            android:id="@+id/rateCommentLater"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/rate_leave"
+            android:gravity="center"
+            android:theme="@style/TextStyle_Standart_ElectricBlue"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

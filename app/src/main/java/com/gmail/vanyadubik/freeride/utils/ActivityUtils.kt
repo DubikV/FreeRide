@@ -201,10 +201,14 @@ object ActivityUtils {
         button3!!.setTextColor(mContext.resources.getColor(R.color.colorAccent))
     }
 
-    fun hideKeyboard(context: Context?) {
+    fun hideKeyboard(context: Context?, view : View?) {
         if (context == null) return
-        (context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager)
-                .toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        if(view==null){
+            imm.toggleSoftInput(InputMethodManager.SHOW_IMPLICIT, 0)
+        }else {
+            imm.hideSoftInputFromWindow(view?.getWindowToken(), 0)
+        }
     }
 
     fun showKeyboard(context: Context?, view: View) {

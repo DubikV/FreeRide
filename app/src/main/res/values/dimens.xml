@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="logo_mini_size">50dp</dimen>
+    <dimen name="guest_logo_mini_size">35dp</dimen>
+
     <dimen name="horiz_dot_marging">100dp</dimen>
     <dimen name="information_bottom_margin">24dp</dimen>
     <dimen name="gap">8dp</dimen>
@@ -10,5 +12,6 @@
     <dimen name="text_size_small">10dp</dimen>
 
     <dimen name="review_circle_size">70dp</dimen>
+    <dimen name="review_circle_size_small">40dp</dimen>
 
 </resources>

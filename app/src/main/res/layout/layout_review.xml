@@ -123,7 +123,7 @@
             android:background="@color/colorBackground"/>
 
         <TextView
-            android:id="@+id/rate_later"
+            android:id="@+id/rateLater"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/rate_later"

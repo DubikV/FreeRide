@@ -26,7 +26,7 @@
             android:gravity="left"
             android:maxLines="1"
             android:padding="3dp"
-            android:theme="@style/TextStyle_Small_Bold_Accent" />
+            android:theme="@style/TextStyle_Standart_Bold_Accent" />
 
         <ImageView
             android:id="@+id/uppendText"
