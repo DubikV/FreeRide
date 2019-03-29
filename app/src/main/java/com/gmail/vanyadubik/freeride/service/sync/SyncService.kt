@@ -8,6 +8,7 @@ import com.gmail.vanyadubik.freeride.model.dto.Poi
 import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
 import com.gmail.vanyadubik.freeride.model.dto.PoiReview
 import io.reactivex.Observable
+import okhttp3.ResponseBody
 import retrofit2.http.*
 
 interface SyncService {
@@ -25,5 +26,5 @@ interface SyncService {
 
     @POST(POI_REVIEW_URL)
     fun setReview(@Path("id") id: String,
-                  @Body newReviewRequest: NewReviewRequest) : Observable<String>
+                  @Body newReviewRequest: NewReviewRequest) : Observable<ResponseBody>
 }

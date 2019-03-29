@@ -12,10 +12,13 @@ import com.gmail.vanyadubik.freeride.service.sync.SyncService
 import com.gmail.vanyadubik.freeride.service.sync.SyncServiceFactory
 import com.gmail.vanyadubik.freeride.utils.NetworkUtils
 import com.google.gson.Gson
+import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.ResponseBody
+import retrofit2.Response
 
 class MapsRepository(private var mContex: Context, private var mainView: MapsMVPContract.View?) : MapsMVPContract.Repository{
 
@@ -126,18 +129,19 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
         }
 
 //        mainView?.onStartLoadDetail()
+//        val s = Gson().toJson(newReviewRequest)
 
         SyncServiceFactory.createService(
                 SyncService::class.java, mContex)
                 .setReview(idPoi, newReviewRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(object : Observer<String> {
+                .subscribe(object : Observer<ResponseBody> {
                     override fun onSubscribe(d: Disposable) {
 
                     }
 
-                    override fun onNext(result: String) {
+                    override fun onNext(responseBody: ResponseBody) {
 
                         Log.i(TAGLOG_SYNC, "On next")
                         mainView?.onAddReview()
@@ -156,6 +160,28 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
 
                     override fun onComplete() {}
                 })
+//                .subscribe(object : Observable<ResponseBody> {
+//                    override fun onSubscribe(d: Disposable) {
+//
+//                    }
+//                    override fun onNext(responseBody: ResponseBody) {
+//
+//                        Log.i(TAGLOG_SYNC, "On next")
+//                        mainView?.onAddReview()
+//                    }
+//                    override fun onError(e: Throwable) {
+//                        if (!NetworkUtils.checkEthernet(mContex)) {
+//                            Log.e(TAGLOG_SYNC, mContex.getString(R.string.error_internet_connecting))
+//                            mainView?.onErrorApi(mContex.getString(R.string.error_internet_connecting))
+//                            return
+//                        }
+//
+//                        Log.e(TAGLOG_SYNC, e.toString())
+//                        mainView?.onErrorApi(e.message.toString())
+//                    }
+//
+//                    override fun onComplete() {}
+//                })
 
     }
 

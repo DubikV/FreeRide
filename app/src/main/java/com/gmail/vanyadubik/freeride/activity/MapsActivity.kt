@@ -140,6 +140,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
         showRouteContainer()
         showPoiDetailContainer(poiDetailed)
         selectedPoi?.id?.let { mapsRepository.getReviews(it, 0, 20) }
+        reviewListAdapter.clear()
     }
 
     override fun onAddReview() {
@@ -307,11 +308,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, MapsMVPContract.Vi
 
     private fun showContainer(show: Boolean) {
         if (show) {
-            bottomSheetContent.setVisibility(View.VISIBLE)
+            bottomSheetContent.visibility = View.VISIBLE
             shimmerViewContainer.stopShimmer()
             shimmerViewContainer.visibility = View.GONE
         } else {
-            bottomSheetContent.setVisibility(View.GONE)
+            bottomSheetContent.visibility = View.GONE
             shimmerViewContainer.startShimmer()
             shimmerViewContainer.visibility = View.VISIBLE
         }

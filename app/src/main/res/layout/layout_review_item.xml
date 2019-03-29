@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,8 +20,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_margin="10dp"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/ic_launcher_foreground"
+            app:civ_circle_background_color="@color/colorPrimary"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,6 +43,7 @@
                     android:layout_toStartOf="@+id/ratingsPoi"
                     android:textAllCaps="true"
                     android:theme="@style/TextStyle_Standart_Bold_Grey"
+                    android:layout_marginLeft="10dp"
                     android:text="@string/unknown_object"/>
 
                 <TextView
@@ -51,7 +53,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:theme="@style/TextStyle_Standart_Grey"
-                    android:text="@string/ratings_not_have"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"/>
 

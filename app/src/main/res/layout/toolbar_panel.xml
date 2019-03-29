@@ -31,7 +31,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                app:civ_circle_background_color="@color/colorPrimary"
                 android:src="@drawable/ic_launcher_foreground"/>
 
             <com.gmail.vanyadubik.freeride.ui.HorizontalDottedProgress

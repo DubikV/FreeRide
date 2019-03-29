@@ -13,10 +13,9 @@ import kotlinx.android.synthetic.main.layout_review_item.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ReviewListAdapter(mContext: Context, private val clickListener: ClickListener) : RecyclerView.Adapter<ReviewListAdapter.ViewHolder>() {
+class ReviewListAdapter(private val mContext: Context, private val clickListener: ClickListener) : RecyclerView.Adapter<ReviewListAdapter.ViewHolder>() {
 
 
-    private var mContext: Context? = null
     private var list: MutableList<PoiReview> = ArrayList<PoiReview>()
     private var layoutInflater: LayoutInflater = mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -40,7 +39,7 @@ class ReviewListAdapter(mContext: Context, private val clickListener: ClickListe
         val guestStatusPoi = view.guestStatusPoi
         val guestDatePoi = view.guestDatePoi
         val guestCommentPoi = view.guestCommentPoi
-        val guestNamePoi = view.guestDatePoi
+        val guestNamePoi = view.guestNamePoi
 
     }
 
@@ -55,26 +54,28 @@ class ReviewListAdapter(mContext: Context, private val clickListener: ClickListe
             Picasso.get()
                     .load(item.user?.image)
                     .resizeDimen(R.dimen.guest_logo_mini_size, R.dimen.guest_logo_mini_size)
+                    .placeholder(R.drawable.ic_launcher_foreground)
                     .error(R.drawable.ic_launcher_foreground)
                     .into(holder.guestImage)
 
             when (item.accessible) {
                 Consts.EVALUATION_AVAILABLE -> {
-                    mContext?.resources?.getColor(R.color.weirdGreen)?.let { holder.guestStatusPoi.setTextColor(it) }
-                    holder.guestStatusPoi.text = mContext?.getString(R.string.available)
+                    mContext.resources?.getColor(R.color.weirdGreen)?.let { holder.guestStatusPoi.setTextColor(it) }
+                    holder.guestStatusPoi.text = mContext.getString(R.string.available)
                 }
                 Consts.EVALUATION_TROUBLESOME -> {
-                    mContext?.resources?.getColor(R.color.orangeYellow)?.let { holder.guestStatusPoi.setTextColor(it) }
-                    holder.guestStatusPoi.text = mContext?.getString(R.string.troublesome)
+                    mContext.resources?.getColor(R.color.orangeYellow)?.let { holder.guestStatusPoi.setTextColor(it) }
+                    holder.guestStatusPoi.text = mContext.getString(R.string.troublesome)
                 }
                 Consts.EVALUATION_INACCESSIBLE -> {
-                    mContext?.resources?.getColor(R.color.coral)?.let { holder.guestStatusPoi.setTextColor(it) }
-                    holder.guestStatusPoi.text = mContext?.getString(R.string.inaccessible)
+                    mContext.resources?.getColor(R.color.coral)?.let { holder.guestStatusPoi.setTextColor(it) }
+                    holder.guestStatusPoi.text = mContext.getString(R.string.inaccessible)
                 }
             }
-            holder.guestDatePoi?.text = SimpleDateFormat("dd-MM-yy").format(Date(item.date))
+            holder.guestDatePoi?.text = SimpleDateFormat("dd.MM.yy").format(Date(item.date))
             holder.guestCommentPoi?.text = item.review
-            holder.guestNamePoi?.text = item.user?.name
+            holder.guestNamePoi?.text = if (item.user?.name.isNullOrEmpty())
+                mContext.getString(R.string.guest) else item.user?.name
         }
     }
 

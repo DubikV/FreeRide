@@ -27,7 +27,8 @@
 
         <activity
             android:name=".activity.MapsActivity"
-            android:theme="@style/AppTheme.Map">
+            android:theme="@style/AppTheme.Map"
+            android:windowSoftInputMode="adjustPan">
         </activity>
 
     </application>
