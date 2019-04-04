@@ -51,15 +51,15 @@
     <string name="rating_added">Дякуємо, Ваша думка важлива для нас</string>
     <string name="guest">Гість</string>
 
-
-
-
-
     <string name="leave_comment">Залиште коментар</string>
     <string name="leave_comment_example">Наприклад ( відсутні пандуси…)</string>
     <string name="leave_comment_miss">Пропустити</string>
 
     <string name="add_review">Оцінити об\'єкт</string>
     <string name="route">Маршрут</string>
+
+    <!--Login-->
+    <string name="registration">Регистрация</string>
+    <string name="question_not_registered">Ще не зареєстровані? </string>
 
 </resources>

@@ -132,7 +132,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/evaluate_button"
+            android:background="@drawable/shape_button_electric_blue"
             android:text="@string/add_review"
             android:theme="@style/TextStyle_Standart_White_Button"/>
 
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:background="@drawable/route_button"
+            android:background="@drawable/shape_button_back_frame"
             android:text="@string/route"
             android:theme="@style/TextStyle_Standart_White_Button"/>
     </LinearLayout>

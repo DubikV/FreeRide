@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/electricBlue">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <View
+           android:id="@+id/viewBanner"
+           android:layout_width="match_parent"
+           android:layout_height="100dp"
+           android:layout_marginLeft="70dp"
+           android:layout_marginRight="70dp"
+           android:background="@drawable/banner_small">
+        </View>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/viewBanner"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+            <Button
+                android:text="@string/registration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loginEmail"
+                android:textColor="@color/electricBlue"
+                android:background="@drawable/shape_button_white"
+                android:gravity="center"
+                android:layout_margin="3dp"/>
+
+            <Button
+                android:text="@string/registration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/loginFacebook"
+                android:textColor="@color/electricBlue"
+                android:background="@drawable/shape_button_electric_blue"
+                android:gravity="center"
+                android:layout_margin="3dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp">
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextStyle_Large_OrangeYellow"
+                    android:text="@string/question_not_registered"
+                    android:gravity="center"
+                    android:padding="5dp"/>
+            <Button
+                    android:text="@string/registration"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/registrationBtn"
+                    android:textColor="@color/electricBlue"
+                    android:background="@drawable/shape_button_white"
+                    android:gravity="center"
+                    android:layout_margin="3dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>
