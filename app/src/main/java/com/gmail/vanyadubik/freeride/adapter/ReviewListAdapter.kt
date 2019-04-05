@@ -57,6 +57,7 @@ class ReviewListAdapter(private val mContext: Context, private val clickListener
                     .placeholder(R.drawable.ic_launcher_foreground)
                     .error(R.drawable.ic_launcher_foreground)
                     .into(holder.guestImage)
+              //  .transform(new CircleTransform())
 
             when (item.accessible) {
                 Consts.EVALUATION_AVAILABLE -> {
