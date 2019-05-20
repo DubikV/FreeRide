@@ -27,10 +27,17 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <style name="LoginTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="LoginTheme" parent="Theme.AppCompat">
         <item name="android:windowBackground">@color/electricBlue</item>
         <item name="colorPrimary">@color/electricBlue</item>
         <item name="colorPrimaryDark">@color/electricBlue</item>
+        <item name="colorAccent">@color/colorWhite</item>
+    </style>
+
+    <style name="RestorePasswordTheme" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorWhite</item>
     </style>
 
@@ -40,6 +47,22 @@
 
     <style name="WhiteDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="button_electric_blue_style">
+        <item name="android:background">@drawable/button_electric_blue_background</item>
+        <item name="android:textColor">@drawable/shape_text_color_white</item>
+    </style>
+
+    <style name="button_white_style">
+        <item name="android:background">@drawable/button_white_background</item>
+        <item name="android:textColor">@drawable/shape_text_color_electric_blue</item>
+    </style>
+
+    <style name="TextInpitLayoutLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:textColor">@color/orangeYellow</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="TextStyle_Large_Accent" parent="android:Widget.TextView">
@@ -68,6 +91,15 @@
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="android:background">@color/colorWhite</item>
+    </style>
+
+    <style name="TextStyle_Standart_White_EditText" parent="android:Widget.EditText">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">@dimen/text_size_middle</item>
+        <item name="android:fontFamily">@string/font_family_regular</item>
+        <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="colorControlActivated">@color/colorWhite</item>
+        <item name="colorControlHighlight">@color/colorWhite</item>
     </style>
 
     <style name="TextStyle_Standart_Bold_Accent" parent="android:Widget.TextView">

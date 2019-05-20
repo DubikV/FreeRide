@@ -38,6 +38,12 @@
                 android:windowSoftInputMode="adjustPan">
         </activity>
 
+        <activity
+                android:name=".activity.RestorePassActivity"
+                android:theme="@style/RestorePasswordTheme"
+                android:windowSoftInputMode="adjustPan">
+        </activity>
+
     </application>
 
 </manifest>

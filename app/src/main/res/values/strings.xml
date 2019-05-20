@@ -59,7 +59,20 @@
     <string name="route">Маршрут</string>
 
     <!--Login-->
-    <string name="registration">Регистрация</string>
+    <string name="registration">Реєстрація</string>
     <string name="question_not_registered">Ще не зареєстровані? </string>
+    <string name="question_forgot_password">Забули пароль?</string>
+    <string name="facebook_login">Вхід через Facebook</string>
+    <string name="email_login">Вхід через EMAIL</string>
+    <string name="login">Вхід</string>
+    <string name="login_email">Вхід через e-mail</string>
+    <string name="enter_login_email">Ваша електронна пошта</string>
+    <string name="enter_login_password">Пароль</string>
+    <string name="action_enter">Увійти</string>
+    <string name="enter_name">Ваше ім\'я</string>
+    <string name="create_password">Створіть пароль</string>
+    <string name="restoring_access">Відновлення доступу</string>
+    <string name="enter_email_for_change_pass">Для зміни паролю вкажіть Вашу електроннну пошту</string>
+    <string name="action_send">Надіслати</string>
 
 </resources>

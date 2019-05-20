@@ -39,7 +39,6 @@ import kotlinx.android.synthetic.main.activity_map.*
 import kotlinx.android.synthetic.main.toolbar_panel.*
 import kotlinx.android.synthetic.main.map_bottom_panel.*
 import java.util.*
-import android.provider.ContactsContract.CommonDataKinds.Phone
 import android.content.Intent
 import com.gmail.vanyadubik.freeride.activity.login.LoginActivity
 

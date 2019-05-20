@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/electricBlue">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <View
+           android:id="@+id/viewBanner"
+           android:layout_width="match_parent"
+           android:layout_height="@dimen/login_banner_height"
+           android:layout_marginLeft="70dp"
+           android:layout_marginRight="70dp"
+           android:background="@drawable/banner_small"
+           android:layout_marginTop="@dimen/login_banner_margin_top">
+        </View>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/viewBanner"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp">
+
+            <android.support.design.widget.TextInputLayout
+                    android:id="@+id/loginEmailContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintTextAppearance="@style/TextInpitLayoutLabel">
+
+                <EditText
+                        android:id="@+id/loginEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_login_email"
+                        android:inputType="textEmailAddress"
+                        android:maxLines="1"
+                        style="@style/TextStyle_Standart_White_EditText" />
+
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:passwordToggleEnabled="true"
+                    app:hintTextAppearance="@style/TextInpitLayoutLabel"
+                    android:layout_marginTop="10dp"
+                    android:layout_alignLeft="@+id/loginEmailContainer"
+                    android:layout_alignRight="@+id/loginEmailContainer"
+                    android:layout_below="@+id/loginEmailContainer">
+
+                <android.support.design.widget.TextInputEditText
+                        android:id="@+id/loginPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_login_password"
+                        android:inputType="textPassword"
+                        android:maxLines="1"
+                        style="@style/TextStyle_Standart_White_EditText" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/TextStyle_Standart_OrangeYellow"
+                    android:text="@string/question_forgot_password"
+                    android:gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:padding="5dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="30dp">
+
+            <Button
+                    android:text="@string/action_enter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/loginBtn"
+                    android:gravity="center"
+                    android:layout_margin="3dp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:enabled="false"
+                    style="@style/button_white_style"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

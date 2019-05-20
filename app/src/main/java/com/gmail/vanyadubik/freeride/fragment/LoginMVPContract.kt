@@ -1,4 +1,4 @@
-package com.gmail.vanyadubik.freeride.activity.login
+package com.gmail.vanyadubik.freeride.fragment
 
 import com.gmail.vanyadubik.freeride.model.dto.NewReviewRequest
 import com.gmail.vanyadubik.freeride.model.dto.Poi
