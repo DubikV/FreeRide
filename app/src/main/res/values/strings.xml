@@ -18,6 +18,14 @@
     <string name="error_sending_data">Помилка віправки даних!</string>
     <string name="error_internet_connecting">Відсутне з\'єднання з інтернетом!</string>
     <string name="error_sync">Помилка запиту</string>
+    <string name="error_400">Передано не вірний параметер</string>
+    <string name="error_401">Користувач не авторизований</string>
+    <string name="error_404">Помилка запиту</string>
+    <string name="error_500">Помилка серверу</string>
+
+    <!--Location-->
+    <string name="error_location">Помилка навігаціі</string>
+    <string name="google_map_permission">Дозволити додатку використовувати Google карти?</string>
 
     <!--AlertDialog-->
     <string name="questions_exit">Ви впевнені, що хочете вийти?</string>

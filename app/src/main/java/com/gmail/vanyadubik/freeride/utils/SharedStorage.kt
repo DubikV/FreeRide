@@ -6,7 +6,7 @@ import android.content.SharedPreferences.Editor
 object SharedStorage {
     val APP_PREFS = "FreeRidePrefs"
 
-    fun getString(context: Context, key: String, defValue: String): String? {
+    fun getString(context: Context, key: String, defValue: String?): String? {
         var result: String? = null
         try {
             result = context.getSharedPreferences(APP_PREFS, Context.MODE_MULTI_PROCESS).getString(key, defValue)
@@ -33,7 +33,7 @@ object SharedStorage {
         return java.lang.Double.longBitsToDouble(getLong(context, key, java.lang.Double.doubleToLongBits(defValue)))
     }
 
-    fun setString(context: Context, key: String, value: String) {
+    fun setString(context: Context, key: String, value: String?) {
         val editor = context.getSharedPreferences(APP_PREFS, Context.MODE_MULTI_PROCESS).edit()
         editor.putString(key, value)
         editor.commit()

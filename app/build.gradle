@@ -72,4 +72,5 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:$RX_JAVA_VERSION"
     implementation 'com.facebook.shimmer:shimmer:0.3.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'pub.devrel:easypermissions:0.2.0'
 }

@@ -4,11 +4,14 @@ package com.gmail.vanyadubik.freeride.activity.map
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
+import android.location.Location
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.CoordinatorLayout
+import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
@@ -19,41 +22,49 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.TextView
 import com.gmail.vanyadubik.freeride.R
+import com.gmail.vanyadubik.freeride.activity.login.LoginActivity
 import com.gmail.vanyadubik.freeride.adapter.ResultSearchAdapter
 import com.gmail.vanyadubik.freeride.adapter.ReviewListAdapter
 import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_AVAILABLE
 import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_INACCESSIBLE
 import com.gmail.vanyadubik.freeride.common.Consts.EVALUATION_TROUBLESOME
-import com.gmail.vanyadubik.freeride.common.Consts.TOKEN
 import com.gmail.vanyadubik.freeride.model.dto.NewReviewRequest
 import com.gmail.vanyadubik.freeride.model.dto.Poi
 import com.gmail.vanyadubik.freeride.model.dto.PoiDetailed
 import com.gmail.vanyadubik.freeride.model.dto.PoiReview
 import com.gmail.vanyadubik.freeride.utils.ActivityUtils
 import com.gmail.vanyadubik.freeride.utils.AnimUtils
-import com.gmail.vanyadubik.freeride.utils.SharedStorage
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_map.*
-import kotlinx.android.synthetic.main.toolbar_panel.*
 import kotlinx.android.synthetic.main.map_bottom_panel.*
+import kotlinx.android.synthetic.main.toolbar_panel.*
+import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
-import android.content.Intent
-import com.gmail.vanyadubik.freeride.activity.login.LoginActivity
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
-    MapsMVPContract.View {
-    private val LOGIN_REQUEST = 999;
+class MapsActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, OnMapReadyCallback,
+    GPSTrackerPresenter.LocationListener, GoogleMap.OnCameraIdleListener, MapsMVPContract.View {
 
-    private lateinit var map: GoogleMap
+    companion object {
+        const val GPS_REQUEST_CODE = 999
+        const val LOGIN_REQUEST = 998
+    }
+    private val LOCATION_PERMISSIONS_REQUEST = 5
+    private val MAP_ZOOM_DEFAULT = 16.5F
+
+    private lateinit var mMap: GoogleMap
     private lateinit var searchOption: MenuItem
     private lateinit var mapsRepository: MapsRepository
+    private lateinit var gpsTrackerPresenter: GPSTrackerPresenter
     private lateinit var adapterResult: ResultSearchAdapter
     private lateinit var poiBottomSheetBehavior: BottomSheetBehavior<CoordinatorLayout>
     private lateinit var reviewListAdapter: ReviewListAdapter
 
+    private var currentLocation: Location? = null
     private var selectedPoi: Poi? = null
     private var isSearchContainerVisible = false
     private var isRouteContainerVisible = false
@@ -96,15 +107,126 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        map = googleMap
-        val permission = ContextCompat.checkSelfPermission(this,
-            Manifest.permission.ACCESS_FINE_LOCATION)
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//        if (requestCode == LOCATION_PERMISSIONS_REQUEST) {
+//            mMap.isMyLocationEnabled = true
+//            mMap.uiSettings.isMapToolbarEnabled = false
+//            mMap.uiSettings.isZoomControlsEnabled = false
+//            mMap.uiSettings.isMyLocationButtonEnabled = false
+//        }
 
-        if (permission == PackageManager.PERMISSION_GRANTED) {
-            map.isMyLocationEnabled = true
-            map.uiSettings.isMyLocationButtonEnabled = false
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+//        val permission = ContextCompat.checkSelfPermission(this,
+//            Manifest.permission.ACCESS_FINE_LOCATION)
+
+        if (checkRequiredLocationPermission()) {
+            mMap.isMyLocationEnabled = true
+            mMap.uiSettings.isMapToolbarEnabled = false
+            mMap.uiSettings.isZoomControlsEnabled = false
+            mMap.uiSettings.isMyLocationButtonEnabled = false
+        }else{
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                LOCATION_PERMISSIONS_REQUEST
+            )
         }
+
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(MAP_ZOOM_DEFAULT))
+        mMap.setOnCameraIdleListener(this)
+
+    }
+
+    override fun onLocationFound(location: Location?) {
+        gpsTrackerPresenter.stopLocationUpdates()
+        currentLocation = location
+        mMap.clear()
+        animateToCurrentLocation()
+    }
+
+
+    private fun animateToCurrentLocation() {
+        if (currentLocation != null) {
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    LatLng(
+                        currentLocation!!.latitude,
+                        currentLocation!!.longitude
+                    ), MAP_ZOOM_DEFAULT
+                )
+            )
+        }
+    }
+
+    override fun checkRequiredLocationPermission(): Boolean {
+        val perms = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION)
+        if (!EasyPermissions.hasPermissions(this, *perms)) {
+            EasyPermissions.requestPermissions(
+                this, getString(R.string.google_map_permission),
+                GPSTrackerPresenter.RUN_TIME_PERMISSION_CODE, *perms
+            )
+            return false
+        } else {
+            return true
+        }
+    }
+
+
+    override fun onCameraIdle() {
+
+//        if (currentLocation == null) {
+//            currentLocation = Location("")
+//        }
+//        currentLocation!!.latitude = mMap.cameraPosition.target.latitude
+//        currentLocation!!.longitude = mMap.cameraPosition.target.longitude
+//
+//        val markerLocation = Location("")
+//        markerLocation.latitude = mGoogleMap.cameraPosition.target.latitude
+//        markerLocation.longitude = mGoogleMap.cameraPosition.target.longitude
+//        startIntentService(markerLocation)
+
+    }
+
+    private fun clearCameraMoveListener() {
+        mMap.setOnCameraMoveListener(null)
+    }
+
+
+    override fun locationError(msg: String) {
+        ActivityUtils.showShortToast(this, getString(R.string.error_location))
+    }
+
+    override fun onStart() {
+        super.onStart()
+        gpsTrackerPresenter.onStart()
+    }
+
+    override fun onDestroy() {
+        gpsTrackerPresenter.onPause()
+        super.onDestroy()
+    }
+
+    private fun onMyLocationClick() {
+        clearCameraMoveListener()
+        gpsTrackerPresenter.onStart()
+    }
+
+
+    override fun onPermissionsGranted(requestCode: Int, perms: List<String>) {
+        gpsTrackerPresenter.onStart()
+    }
+
+    override fun onPermissionsDenied(requestCode: Int, perms: List<String>) {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            LOCATION_PERMISSIONS_REQUEST
+        )
     }
 
     override fun onBackPressed() {
@@ -121,6 +243,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
         super.onBackPressed()
     }
+
 
     override fun onShowPoiList(list: List<Poi>) {
         progressBar.hideAnimation()
@@ -177,6 +300,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 LOGIN_REQUEST -> {}
+                GPS_REQUEST_CODE -> {
+                    gpsTrackerPresenter.onStart()
+                }
             }
         }
     }
@@ -184,6 +310,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
     private fun initStartData() {
 
         progressBar.hideAnimation()
+
+        gpsTrackerPresenter = GPSTrackerPresenter(this, this)
 
         mapsRepository = MapsRepository(this, this)
 
@@ -200,10 +328,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
                 }
             }
         })
-
-        if(SharedStorage.getString(this, TOKEN, "")?.isEmpty()!!){
-            SharedStorage.setString(this, TOKEN, UUID.randomUUID().toString())
-        }
 
         adapterResult = ResultSearchAdapter(this, object : ResultSearchAdapter.ClickListener{
             override fun onItemClick(position: Int) {
@@ -265,16 +389,16 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback,
         }
 
         btnTraffic.setOnClickListener {
-            if (map != null && btnTraffic != null) {
-                map.isTrafficEnabled = !map.isTrafficEnabled
+            if (mMap != null && btnTraffic != null) {
+                mMap.isTrafficEnabled = !mMap.isTrafficEnabled
                 btnTraffic.setImageResource(
-                        if (map.isTrafficEnabled) R.drawable.ic_traffic_off else R.drawable.ic_traffic_on)
+                        if (mMap.isTrafficEnabled) R.drawable.ic_traffic_off else R.drawable.ic_traffic_on)
             }
         }
 
         btnMyLocation.setOnClickListener {
-//            geocoderPresenter.getLastKnownLocation()
-//            track(TrackEvents.didLocalizeMe)
+
+            onMyLocationClick()
         }
 
         reviewBtn.setOnClickListener {

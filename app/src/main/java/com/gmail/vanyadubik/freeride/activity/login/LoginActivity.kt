@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import com.gmail.vanyadubik.freeride.R
-import com.gmail.vanyadubik.freeride.fragment.MenuFragment
+import com.gmail.vanyadubik.freeride.fragment.menu.MenuFragment
 
 class LoginActivity : AppCompatActivity(){
 

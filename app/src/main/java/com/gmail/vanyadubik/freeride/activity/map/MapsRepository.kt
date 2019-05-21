@@ -62,7 +62,7 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
                         }
 
                         Log.e(TAGLOG_SYNC, e.toString())
-                        mainView?.onErrorApi(e.message.toString())
+                        mainView?.onErrorApi(NetworkUtils.getConnectExeption(mContex, e, e.message.toString()))
                     }
 
                     override fun onComplete() {}
@@ -111,7 +111,7 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
                         }
 
                         Log.e(TAGLOG_SYNC, e.toString())
-                        mainView?.onErrorApi(e.message.toString())
+                        mainView?.onErrorApi(NetworkUtils.getConnectExeption(mContex, e, e.message.toString()))
                     }
 
                     override fun onComplete() {}
@@ -153,7 +153,7 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
                         }
 
                         Log.e(TAGLOG_SYNC, e.toString())
-                        mainView?.onErrorApi(e.message.toString())
+                        mainView?.onErrorApi(NetworkUtils.getConnectExeption(mContex, e, e.message.toString()))
                     }
 
                     override fun onComplete() {}
@@ -223,7 +223,7 @@ class MapsRepository(private var mContex: Context, private var mainView: MapsMVP
                         }
 
                         Log.e(TAGLOG_SYNC, e.toString())
-                        mainView?.onErrorApi(e.message.toString())
+                        mainView?.onErrorApi(NetworkUtils.getConnectExeption(mContex, e, e.message.toString()))
                     }
 
                     override fun onComplete() {}

@@ -19,17 +19,18 @@
                 android:layout_height="@dimen/logo_size"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_margin="20dp"
+                android:layout_margin="3dp"
                 android:src="@drawable/ic_no_photo"/>
 
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:layout_below="@+id/logoImage"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginRight="30dp"
+                android:layout_above="@+id/buttonPanel">
 
             <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -44,7 +45,7 @@
                         android:hint="@string/enter_login_email"
                         android:inputType="textEmailAddress"
                         android:maxLines="1"
-                        style="@style/TextStyle_Standart_White_EditText" />
+                        style="@style/TextStyle_Standart_White_EditText"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -61,7 +62,7 @@
                         android:hint="@string/enter_name"
                         android:inputType="textPersonName"
                         android:maxLines="1"
-                        style="@style/TextStyle_Standart_White_EditText" />
+                        style="@style/TextStyle_Standart_White_EditText"/>
 
 
             </android.support.design.widget.TextInputLayout>
@@ -80,12 +81,13 @@
                         android:hint="@string/create_password"
                         android:inputType="textPassword"
                         android:maxLines="1"
-                        style="@style/TextStyle_Standart_White_EditText" />
+                        style="@style/TextStyle_Standart_White_EditText"/>
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
         <LinearLayout
+                android:id="@+id/buttonPanel"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,7 +118,7 @@
                     android:text="@string/action_enter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/loginBtn"
+                    android:id="@+id/registrationBtn"
                     android:gravity="center"
                     android:layout_margin="3dp"
                     android:paddingTop="3dp"
