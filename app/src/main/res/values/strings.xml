@@ -6,6 +6,7 @@
     <string name="load_location_error">Something went wrong. Please try again.</string>
     <string name="no_search_results">There are no results for your search</string>
     <string name="action_search">Пошук</string>
+    <string name="action_repeat">Повторити</string>
 
 
     <string name="search_hint">Куди прямуєте?</string>
@@ -22,6 +23,9 @@
     <string name="error_401">Користувач не авторизований</string>
     <string name="error_404">Помилка запиту</string>
     <string name="error_500">Помилка серверу</string>
+
+
+    <string name="error_field_required">Ці данні являються обов\'язковими</string>
 
     <!--Location-->
     <string name="error_location">Помилка навігаціі</string>

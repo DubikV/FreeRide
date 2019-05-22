@@ -35,7 +35,7 @@
             <Button
                     android:text="@string/email_login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_load_height"
                     android:id="@+id/loginEmail"
                     android:gravity="center"
                     android:textAllCaps="true"
@@ -49,7 +49,7 @@
             <Button
                 android:text="@string/facebook_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_load_height"
                 android:id="@+id/loginFacebook"
                 android:gravity="center"
                 android:textAllCaps="true"
@@ -75,14 +75,14 @@
             <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:theme="@style/TextStyle_Large_OrangeYellow"
+                    android:theme="@style/TextStyle_Standart_OrangeYellow"
                     android:text="@string/question_not_registered"
                     android:gravity="center"
                     android:padding="5dp"/>
             <Button
                     android:text="@string/registration"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/button_load_height"
                     android:id="@+id/registrationBtn"
                     android:gravity="center"
                     android:layout_margin="3dp"

@@ -16,4 +16,7 @@
     <dimen name="review_circle_size_small">40dp</dimen>
     <dimen name="login_banner_height">100dp</dimen>
     <dimen name="login_banner_margin_top">100dp</dimen>
+
+    <dimen name="button_load_height">50dp</dimen>
+
 </resources>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/content_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/electricBlue">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:custom="http://schemas.android.com/tools"
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/electricBlue">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -82,29 +82,27 @@
 
         </LinearLayout>
 
-        <LinearLayout
-                android:orientation="vertical"
+        <com.gmail.vanyadubyk.freeride.ui.LoadButton
+                android:id="@+id/loginBtn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/button_load_height"
+                android:background="@drawable/shape_button_white"
+                android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="30dp">
-
-            <Button
-                    android:text="@string/action_enter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/loginBtn"
-                    android:gravity="center"
-                    android:layout_margin="3dp"
-                    android:paddingTop="3dp"
-                    android:paddingBottom="3dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:enabled="false"
-                    style="@style/button_white_style"/>
-        </LinearLayout>
+                android:layout_marginBottom="30dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:enabled="false"
+                app:text="@string/action_enter"
+                app:colorProgressBar="@color/electricBlue"
+                app:textColor="@color/electricBlue"
+                app:progressBarSize="50dp"
+                app:textSize="@dimen/text_size_middle"
+                app:cornerRadiusDim = "6dp"/>
 
     </RelativeLayout>
 

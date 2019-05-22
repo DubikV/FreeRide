@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="LoadButton">
+    <attr name="text" format="string"/>
+    <attr name="colorProgressBar" format="integer"/>
+    <attr name="textSize" format="dimension"/>
+    <attr name="progressBarSize" format="dimension"/>
+    <attr name="textColor" format="integer"/>
+    <attr name="cornerRadiusDim" format="dimension"/>
+  </declare-styleable>
+
+</resources>

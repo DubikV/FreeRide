@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gmail.vanyadubik.freeride">
+          package="com.gmail.vanyadubyk.freeride">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
@@ -17,7 +17,7 @@
                 android:value="@string/google_maps_key" />
 
         <activity
-                android:name=".activity.SplashActivity"
+                android:name="com.gmail.vanyadubyk.freeride.activity.SplashActivity"
                 android:label="@string/app_name"
                 android:windowSoftInputMode="adjustPan"
                 android:theme="@style/SplashTheme">
@@ -28,19 +28,19 @@
         </activity>
 
         <activity
-            android:name=".activity.map.MapsActivity"
+            android:name="com.gmail.vanyadubyk.freeride.activity.map.MapsActivity"
             android:theme="@style/AppTheme.Map"
             android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
-                android:name=".activity.login.LoginActivity"
+                android:name="com.gmail.vanyadubyk.freeride.activity.login.LoginActivity"
                 android:theme="@style/LoginTheme"
                 android:windowSoftInputMode="adjustPan">
         </activity>
 
         <activity
-                android:name=".activity.RecoveryPassActivity"
+                android:name="com.gmail.vanyadubyk.freeride.activity.RecoveryPassActivity"
                 android:theme="@style/RestorePasswordTheme"
                 android:windowSoftInputMode="adjustPan">
         </activity>

@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.gmail.vanyadubik.freeride"
+        applicationId "com.gmail.vanyadubyk.freeride"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
